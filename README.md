@@ -1,1 +1,1 @@
-# Mastermind-Cruel
+#[ModKit Wiki](../../wiki)
