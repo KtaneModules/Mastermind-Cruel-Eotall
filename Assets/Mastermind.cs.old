@@ -20,14 +20,11 @@ public class Mastermind : MonoBehaviour {
 
 	private int[] SlotNR = {0, 0, 0, 0, 0}; 
 	private int[] corrSlot = {0, 0, 0, 0, 0}; 
-	private string[] SlotColors = {"W", "M", "Y", "G", "R", "B"};
 	private int PegBlack = 0;
 	private int PegWhite = 0;
 	private int PegGray = 0;
 	private int DisplayLeftMod;
 	private int DisplayRightMod;
-	private string RColor;
-	private string LColor;
 
 	private bool isActive = false;
 	private bool isSolved = false;
@@ -65,7 +62,7 @@ public class Mastermind : MonoBehaviour {
 		{
 			corrSlot[i] = Random.Range (0, 6);
 		}
-		Debug.Log ("[Mastermind Cruel #" + moduleId + "] The correct code is " + SlotColors[corrSlot[0]] + " " + SlotColors[corrSlot[1]] + " " + SlotColors[corrSlot[2]] + " " + SlotColors[corrSlot[3]] + " " + SlotColors[corrSlot[4]]);
+		Debug.Log ("[Mastermind Cruel #" + moduleId + "] The correct code is " + corrSlot[0] + corrSlot[1] + corrSlot[2] + corrSlot[3] + corrSlot[4]);
 
 		DisplaytextLeft.text = " ";
 		DisplaytextRight.text = " ";
@@ -118,6 +115,7 @@ public class Mastermind : MonoBehaviour {
 	}
 
 	void handleQuery() {
+		Debug.Log ("[Mastermind Cruel #" + moduleId + "] Query was pressed");
 
 		Audio.PlayGameSoundAtTransform (KMSoundOverride.SoundEffect.ButtonPress, Query.transform);
 		Query.AddInteractionPunch ();
@@ -129,8 +127,9 @@ public class Mastermind : MonoBehaviour {
 
 			// substituting variables
 			int[] PHSlotNR = {SlotNR[0], SlotNR[1], SlotNR[2], SlotNR[3], SlotNR[4]};
-			Debug.Log ("[Mastermind Cruel #" + moduleId + "] Query: " + SlotColors[PHSlotNR [0]] + " " + SlotColors[PHSlotNR [1]] + " " + SlotColors[PHSlotNR [2]] + " " + SlotColors[PHSlotNR [3]] + " " + SlotColors[PHSlotNR [4]]);
+			Debug.Log ("[Mastermind Cruel #" + moduleId + "] Code entered: " + PHSlotNR [0] + PHSlotNR [1] + PHSlotNR [2] + PHSlotNR [3] + PHSlotNR [4]);
 			int[] PHcorrSlot = {corrSlot[0], corrSlot[1], corrSlot[2], corrSlot[3], corrSlot[4]};
+			Debug.Log ("[Mastermind Cruel #" + moduleId + "] Correct code is: " + PHcorrSlot [0] + PHcorrSlot [1] + PHcorrSlot [2] + PHcorrSlot [3] + PHcorrSlot [4]);
 
 
 			// assigning black pegs
@@ -165,7 +164,7 @@ public class Mastermind : MonoBehaviour {
 			// assigning gray pegs
 			PegGray = (5 - PegBlack - PegWhite);
 
-			Debug.Log ("[Mastermind Cruel #" + moduleId + "] Query result: A=" + PegBlack + ", B=" + PegWhite + ", C=" + PegGray);
+			Debug.Log ("[Mastermind Cruel #" + moduleId + "] Pegs are: " + PegBlack + " black, " + PegWhite + " white, " + PegGray + " gray.");
 
 
 			// updating display
@@ -177,88 +176,69 @@ public class Mastermind : MonoBehaviour {
 			int RightRnd = Random.Range (0, 6);
 
 			// define color right, and mods
-
 			if (RightRnd == 0) {
 				DisplayLeftMod = iiBatteries;
 				DisplayRightMod = iiSolved;
 				DisplaytextRight.color = Color.white;
-				RColor = "White";
 			}
 			if (RightRnd == 1) {
 				DisplayLeftMod = iiLit;
 				DisplayRightMod = iiLast;
 				DisplaytextRight.color = Color.magenta;
-				RColor = "Magenta";
 			}
 			if (RightRnd == 2) {
 				DisplayLeftMod = iiSum;
 				DisplayRightMod = iiPorts;
 				DisplaytextRight.color = Color.yellow;
-				RColor = "Yellow";
 			}
 			if (RightRnd == 3) {
 				DisplayLeftMod = iiModules;
 				DisplayRightMod = iiUnlit;
 				DisplaytextRight.color = Color.green;
-				RColor = "Green";
 			}
 			if (RightRnd == 4) {
 				DisplayLeftMod = iiPortTypes;
 				DisplayRightMod = iiStrikes;
 				DisplaytextRight.color = Color.red;
-				RColor = "Red";
 			}
 			if (RightRnd == 5) {
 				DisplayLeftMod = iiFirst;
 				DisplayRightMod = iiBatteryHolders;
 				DisplaytextRight.color = Color.blue;
-				RColor = "Blue";
 			}
 
 			// define color left, and sums
-
 			if (LeftRnd == 0) {
 				DisplaytextLeft.text = (PegBlack + DisplayLeftMod).ToString ();
 				DisplaytextRight.text = (PegWhite + DisplayRightMod).ToString ();
 				DisplaytextLeft.color = Color.white;
-				LColor = "White";
 			} 
 			if (LeftRnd == 1) {
 				DisplaytextLeft.text = (PegGray + DisplayLeftMod).ToString ();
 				DisplaytextRight.text = (PegBlack+ DisplayRightMod).ToString ();
 				DisplaytextLeft.color = Color.magenta;
-				LColor = "Magenta";
 			} 
 			if (LeftRnd == 2) {
 				DisplaytextLeft.text = (PegWhite + DisplayLeftMod).ToString ();
 				DisplaytextRight.text = (PegGray + DisplayRightMod).ToString ();
 				DisplaytextLeft.color = Color.yellow;
-				LColor = "Yellow";
 			} 
 			if (LeftRnd == 3) {
 				DisplaytextLeft.text = (PegWhite + DisplayLeftMod).ToString ();
 				DisplaytextRight.text = (PegBlack + DisplayRightMod).ToString ();
 				DisplaytextLeft.color = Color.green;
-				LColor = "Green";
 			} 
 			if (LeftRnd == 4) {
 				DisplaytextLeft.text = (PegGray + DisplayLeftMod).ToString ();
 				DisplaytextRight.text = (PegWhite + DisplayRightMod).ToString ();
 				DisplaytextLeft.color = Color.red;
-				LColor = "Red";
 			} 
 			if (LeftRnd == 5) {
 				DisplaytextLeft.text = (PegBlack+ DisplayLeftMod).ToString ();
 				DisplaytextRight.text = (PegGray + DisplayRightMod).ToString ();
 				DisplaytextLeft.color = Color.blue;
-				LColor = "Blue";
-			}
+			} 
 
-			Debug.Log ("[Mastermind Cruel #" + moduleId + "] Display shows: " + DisplaytextLeft.text + " " + LColor + ", " + DisplaytextRight.text + " " + RColor);
-
-//			Debug.Log ("[Mastermind Cruel #" + moduleId + "] Query: " + SlotColors[PHSlotNR [0]] + SlotColors[PHSlotNR [1]] + SlotColors[PHSlotNR [2]] + SlotColors[PHSlotNR [3]] + SlotColors[PHSlotNR [4]] + 
-//				"\nPegs are: " + PegBlack + " black (A), " + PegWhite + " white (B), " + PegGray + " gray (C)" +
-//				"\nDisplay shows: " + DisplaytextLeft.text + " " + LColor + ", " + DisplaytextRight.text + " " + RColor);
 
 			// reset
 			PegBlack = 0;
@@ -268,6 +248,7 @@ public class Mastermind : MonoBehaviour {
 	}
 
 	void handleSubmit() {
+		Debug.Log ("[Mastermind Cruel #" + moduleId + "] Submit was pressed");
 
 		Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, Submit.transform);
 		Submit.AddInteractionPunch ();
@@ -283,16 +264,15 @@ public class Mastermind : MonoBehaviour {
 		if (PegBlack == 5) {
 			Module.HandlePass ();
 			isSolved = true;
-			Debug.Log ("[Mastermind Cruel #" + moduleId + "] Submit: " + SlotColors[SlotNR [0]] + " " + SlotColors[SlotNR [1]] + " " + SlotColors[SlotNR [2]] + " " + SlotColors[SlotNR [3]] + " " + SlotColors[SlotNR [4]] + " - Code correct. Module Solved");
 		} else {
 			PegBlack = 0;
 			Module.HandleStrike ();
-			Debug.Log ("[Mastermind Cruel #" + moduleId + "] Submit: " + SlotColors[SlotNR [0]] + " " + SlotColors[SlotNR [1]] + " " + SlotColors[SlotNR [2]] + " " + SlotColors[SlotNR [3]] + " " + SlotColors[SlotNR [4]] + " - Code incorrect. Strike");
 		}
 					
 	}
 
 	void handleSlot(int num) {
+		Debug.Log ("[Mastermind Cruel #" + moduleId + "] Slot " + (num) + " was pressed");
 
 		Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, Slot[num].transform);
 
@@ -303,9 +283,10 @@ public class Mastermind : MonoBehaviour {
 			
 			if (SlotNR [num] > 5)
 			SlotNR [num] = 0;
+
+		Debug.Log ("[Mastermind Cruel #" + moduleId + "] Slot " + (num) + " number is now " + SlotNR[num]);
 			
 		Slot[num].GetComponent<MeshRenderer>().material.color = SlotColor[SlotNR[num]];
-
-//		Debug.Log ("[Mastermind Cruel #" + moduleId + "] Slot " + (num) + " color is now " + SlotColors[corrSlot[num]]);
+		Debug.Log ("[Mastermind Cruel #" + moduleId + "] Slot " + (num) + " color is now " + SlotColor[SlotNR[num]]);
 	}
 }

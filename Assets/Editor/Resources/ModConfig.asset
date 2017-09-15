@@ -13,5 +13,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Mastermind Cruel
   title: Mastermind Cruel
-  version: 2.2c
+  version: 2.4c
   outputFolder: build
